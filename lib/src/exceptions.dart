@@ -11,39 +11,54 @@ class OmdbApiException implements Exception {
   String toString() => 'statusCode: $statusCode, $runtimeType: $message';
 }
 
-class OmdbApiNotFoundException extends OmdbApiException {
-  OmdbApiNotFoundException(super.statusCode, super.message);
-}
-
+/// Should be thrown as result of 400 status code
 class OmdbApiBadRequestException extends OmdbApiException {
   OmdbApiBadRequestException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 401 status code
 class OmdbApiUnauthorizedException extends OmdbApiException {
   OmdbApiUnauthorizedException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 403 status code
 class OmdbApiForbiddenException extends OmdbApiException {
   OmdbApiForbiddenException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 404 status code
+class OmdbApiNotFoundException extends OmdbApiException {
+  OmdbApiNotFoundException(super.statusCode, super.message);
+}
+
+/// Should be thrown as result of 500 status code
 class OmdbApiInternalServerErrorException extends OmdbApiException {
   OmdbApiInternalServerErrorException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 502 status code
 class OmdbApiBadGatewayException extends OmdbApiException {
   OmdbApiBadGatewayException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 503 status code
 class OmdbApiServiceUnavailableException extends OmdbApiException {
   OmdbApiServiceUnavailableException(super.statusCode, super.message);
 }
 
+/// Should be thrown as result of 504 status code
 class OmdbApiGatewayTimeoutException extends OmdbApiException {
   OmdbApiGatewayTimeoutException(super.statusCode, super.message);
 }
 
-dynamic handleOmdbHttpStatuses(Response response) {
+/// Used to handle the http status codes returned by the omdb api
+///
+/// Example:
+///
+/// ```
+/// final response = handleOmdbHttpStatuses(await http.get(uri));
+/// ```
+Response handleOmdbHttpStatuses(Response response) {
   switch (response.statusCode) {
     case 200:
       return response;

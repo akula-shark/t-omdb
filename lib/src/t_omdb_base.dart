@@ -16,6 +16,14 @@ class OmdbApi {
 
   OmdbApi(this.apiKey);
 
+  /// Searches for a movie by it's imdb id
+  ///
+  /// Example:
+  ///
+  /// ```
+  /// final omdb = OmdbApi('your-api-key');
+  /// final String? byId = await omdb.searchById('your-imdb-id-here');
+  /// ```
   Future<String?> searchById(
     String id, {
     OmdbType? type,
@@ -24,7 +32,6 @@ class OmdbApi {
     OmdbResponseType? responseType,
   }) async {
 
-    // Create a Map from the query parameters that aren't null
     final Map<String, dynamic> queryParameters = Map.fromEntries([
       MapEntry('i', id),
       MapEntry('apikey', apiKey),
@@ -34,12 +41,9 @@ class OmdbApi {
       MapEntry('r', responseType?.name),
     ].where((element) => element.value != null));
 
-    // Create the Uri
     final uri =
         Uri(scheme: scheme, host: host, queryParameters: queryParameters);
 
-    // Get the response from the API and handle the status codes throwing
-    // exceptions if necessary
     final response = handleOmdbHttpStatuses(await http.get(uri));
 
     print(response.statusCode);
@@ -47,6 +51,14 @@ class OmdbApi {
     return response.body;
   }
 
+  /// Searches for a movie by it's title and returns the first result
+  ///
+  /// Example:
+  ///
+  /// ```
+  /// final omdb = OmdbApi('your-api-key');
+  /// final String? byTitle = await omdb.searchByTitle('movie title here');
+  /// ```
   Future<String?> searchByTitle(
     String title, {
     OmdbType? type,
@@ -55,7 +67,6 @@ class OmdbApi {
     OmdbResponseType? responseType,
   }) async {
 
-    // Create a Map from the query parameters that aren't null
     final Map<String, dynamic> queryParameters = Map.fromEntries([
       MapEntry('t', title),
       MapEntry('apikey', apiKey),
@@ -65,17 +76,22 @@ class OmdbApi {
       MapEntry('r', responseType?.name),
     ].where((element) => element.value != null));
 
-    // Create the Uri
     final uri =
         Uri(scheme: scheme, host: host, queryParameters: queryParameters);
 
-    // Get the response from the API and handle the status codes throwing
-    // exceptions if necessary
     final response = handleOmdbHttpStatuses(await http.get(uri));
 
     return response.body;
   }
 
+  /// Searches for a movie by a query and returns one or more results that match the query
+  ///
+  /// Example:
+  ///
+  /// ```
+  /// final omdb = OmdbApi('your-api-key');
+  /// final String? byQuery = await omdb.searchByQuery('movie title here');
+  /// ```
   Future<String?> searchByQuery(
     String query, {
     OmdbType? type,
@@ -84,7 +100,6 @@ class OmdbApi {
     String? page,
   }) async {
 
-    // Create a Map from the query parameters that aren't null
     final Map<String, dynamic> queryParameters = Map.fromEntries([
       MapEntry('s', query),
       MapEntry('apikey', apiKey),
@@ -94,12 +109,9 @@ class OmdbApi {
       MapEntry('page', page),
     ].where((element) => element.value != null));
 
-    // Create the Uri
     final uri =
     Uri(scheme: scheme, host: host, queryParameters: queryParameters);
 
-    // Get the response from the API and handle the status codes throwing
-    // exceptions if necessary
     final response = handleOmdbHttpStatuses(await http.get(uri));
 
     return response.body;
