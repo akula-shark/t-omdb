@@ -1,6 +1,6 @@
 name: t_omdb
-description: A simple library for interacting with the OMDb API.
-version: 1.0.1
+description: A simple convenience library for interacting with the OMDb API.
+version: 1.0.2
 repository: https://github.com/akula-shark/t-omdb
 
 environment:
