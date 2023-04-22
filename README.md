@@ -2,11 +2,8 @@
 For questions or help ask <a href="https://github.com/akula-shark/t-omdb/discussions/categories/q-a">here</a>. File issues <a href="https://github.com/akula-shark/t-omdb/issues">here</a> and see pub.dev page <a href="https://pub.dev/packages/t_omdb">here</a>.
 
 ## Todo list
-- [x] Search by ID
-- [x] Search by title
-- [x] Search by query
-- [ ] Posters API
-- [ ] Tests
+- Posters API
+- Tests
 
 ## Getting started
 
