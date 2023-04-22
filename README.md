@@ -1,39 +1,65 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Unofficial Dart library for interacting with OMDb API
+For questions or help ask <a href="https://github.com/akula-shark/t-omdb/discussions/categories/q-a">here</a>. File issues <a href="https://github.com/akula-shark/t-omdb/issues">here</a> and see pub.dev page <a href="https://pub.dev/packages/t_omdb">here</a>.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Todo list
+- [x] Search by ID
+- [x] Search by title
+- [x] Search by query
+- [ ] Posters API
+- [ ] Tests
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+### Add dependency
 ```
+$ dart pub add t_omdb
+```
+or add it manually to your `pubspec.yaml` file:
+```yaml
+dependencies:
+  t_omdb: ^replace-with-latest-version
+```
+### Example usage:
+```dart
+import 'package:t_omdb/t_omdb.dart';
 
-## Additional information
+void main() async {
+  final omdb = OmdbApi('your-api-key');
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+  // Search for "guardians of the galaxy" by it's imdb id
+  final String? byId = await omdb.searchById('tt3896198');
+
+  // Search specifically for "guardians of the galaxy" by title (returns the first result)
+  final String? byTitle = await omdb.searchByTitle('guardians of the galaxy');
+
+  // Search for "guardians of the galaxy" by query (returns multiple results that match the query)
+  final byQuery = await omdb.searchByQuery('guardians of the galaxy', type: OmdbType.movie, year: '2017', responseType: OmdbResponseType.json);
+
+  print(byId);
+  print(byTitle);
+  print(byQuery);
+}
+```
+## Parameters
+
+### By ID or Title
+*Please note either i or t is required*
+
+| Parameter | Required | Valid options          | Description |
+| --------- | -------- |------------------------| ----------- |
+| i         | Optional*| <empty>                | A valid IMDb ID (e.g. tt1285016) |
+| t         | Optional*| <empty>                | Movie title to search for. |
+| type      | No       | movie, series, episode | Type of result to return. |
+| y         | No       | <empty>                | Year of release. |
+| plot      | No       | short, full            | Return short or full plot. |
+| r         | No       | json, xml              | The data type to return. |
+
+### By Search
+
+| Parameter | Required | Valid options        | Default Value | Description |
+| --------- |----------|----------------------| ------------- | ----------- |
+| s         | Yes      | <empty>              |               | Movie title to search for. |
+| type      | No       | movie, series, episode |      | Type of result to return. |
+| y         | No       | <empty>              |              | Year of release. |
+| r         | No       | json, xml            | json         | The data type to return. |
+| page      | No       | 1 - 100              | 1            | Page number to return. |
